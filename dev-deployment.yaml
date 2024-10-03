@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-dev
+  namespace: frontend-admin
+spec:
+  selector:
+    matchLabels:
+      app: admin-dev
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: admin-dev
+    spec:
+      containers:
+      - name: admin-dev
+        image:  asia.gcr.io/$PROJECT_ID/frontend/admin:$SHORT_SHA
+        ports:
+        - containerPort: 5050
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "1Gi"
